@@ -36,7 +36,7 @@ const Hero: FC<THeroProps> = ({
       </div>
 
       {/* Suggestions section */}
-      <div className="flex flex-wrap items-center justify-center gap-2.5 pb-[30px] lg:flex-nowrap lg:justify-normal">
+      <div className="flex max-w-2xl flex-wrap items-center justify-center gap-2.5 pb-[30px]">
         {suggestions.map((item) => (
           <div
             className="flex h-[35px] cursor-pointer items-center justify-center gap-[5px] rounded-full border border-solid border-[#C1C1C1] bg-[#EDEDEA] px-2.5 py-2"
@@ -72,18 +72,22 @@ type suggestionType = {
 const suggestions: suggestionType[] = [
   {
     id: 1,
-    name: "How much does the US subsidize fossil fuels?",
+    name: "How does fracking work?",
     icon: "/img/icon _leaf_.svg",
   },
   {
     id: 2,
-    name: "Fun facts about Charli xcx",
-    // icon: "/img/icon _dumbell_.svg",
+    name: "How to learn to juggle",
+    icon: "/img/icon _dumbell_.svg",
   },
   {
     id: 3,
     name: "How to make an HTTP request in JavaScript",
     icon: "/img/icon _atom_.svg",
+  },
+  {
+    id: 4,
+    name: "Fun facts about Charli xcx",
   },
 ];
 

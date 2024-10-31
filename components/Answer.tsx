@@ -43,7 +43,7 @@ export default function Answer({ answer }: { answer: string }) {
       <div className="flex flex-wrap content-center items-center gap-[15px]">
         <div className="w-full whitespace-pre-wrap text-lg leading-[152.5%] text-black">
           {answer ? (
-            <Markdown children={answer.trim()} />
+            <Markdown>{answer.trim()}</Markdown>
           ) : (
             <div className="flex w-full flex-col gap-2">
               <div className="h-6 w-full animate-pulse rounded-md bg-stone-300" />
