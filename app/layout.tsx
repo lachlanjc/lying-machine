@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
-import { Lexend } from "next/font/google";
-import PlausibleProvider from "next-plausible";
+import { Lexend, Modak } from "next/font/google";
 import "./globals.css";
 
 const inter = Lexend({ subsets: ["latin"] });
+const modak = Modak({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-modak",
+});
 
-let title = "Turbo Seek – AI Search Engine";
+let title = "The Lying Machine";
 let description =
   "Search smarter and faster with our open source AI search engine";
-let url = "https://turboseek.io/";
-let ogimage = "https://turboseek.io/og-image.png";
-let sitename = "TurboSeek.io";
+let url = "https://lying-machine.vercel.app/";
+let ogimage = "https://lying-machine.vercel.app/og-image.png";
+let sitename = "The Lying Machine";
 
 export const metadata: Metadata = {
   metadataBase: new URL(url),
@@ -43,11 +47,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <PlausibleProvider domain="turboseek.io" />
-      </head>
       <body
-        className={`${inter.className} flex min-h-screen flex-col justify-between`}
+        className={`${inter.className} ${modak.variable} flex min-h-screen flex-col justify-between`}
       >
         {children}
       </body>

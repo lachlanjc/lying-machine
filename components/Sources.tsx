@@ -19,7 +19,7 @@ export default function Sources({
           height={24}
         />
         <h3 className="text-base font-bold uppercase leading-[152.5%] text-black">
-          sources:{" "}
+          Sources
         </h3>
       </div>
       <div className="flex w-full max-w-[890px] flex-wrap content-center items-center gap-[15px]">

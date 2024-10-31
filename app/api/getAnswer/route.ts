@@ -50,9 +50,9 @@ export async function POST(request: Request) {
   );
 
   const mainAnswerPrompt = `
-  Given a user question and some context, please write a clean, concise and accurate answer to the question based on the context. You will be given a set of related contexts to the question, each starting with a reference number like [[citation:x]], where x is a number. Please use the context when crafting your answer.
+  Given a user question and some context, please write a concise and answer to the question based on the context containing two truths and one lie. You must always include one lie that sounds plausible based on the source material. Do NOT label which information is true and which is a lie, and do not number the points. You will be given a set of related contexts to the question, each starting with a reference number like [[citation:x]], where x is a number. Please use the context when crafting your answer, and include as many citations on the lie as the truth.
 
-  Your answer must be correct, accurate and written by an expert using an unbiased and professional tone. Please limit to 1024 tokens. Do not give any information that is not related to the question, and do not repeat. Say "information is missing on" followed by the related topic, if the given context do not provide sufficient information.
+  Your answer must be written by an expert using an unbiased and professional tone. Please limit to 1024 tokens. Do not give any information that is not related to the question, and do not repeat. Say "information is missing on" followed by the related topic, if the given context do not provide sufficient information.
 
   Here are the set of contexts:
 

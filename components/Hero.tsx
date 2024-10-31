@@ -19,25 +19,12 @@ const Hero: FC<THeroProps> = ({
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <a
-        className="mb-4 inline-flex h-7 shrink-0 items-center gap-[9px] rounded-[50px] border-[0.5px] border-solid border-[#E6E6E6] bg-white px-3 py-4 shadow-[0px_1px_1px_0px_rgba(0,0,0,0.25)]"
-        href="https://www.together.ai/"
-        target="_blank"
-      >
-        <Image
-          unoptimized
-          src="/img/together-ai.svg"
-          alt="hero"
-          width={18}
-          height={18}
-        />
-        <span className="text-center text-base font-light leading-[normal] text-[#1B1B16]">
-          Powered by Together AI
-        </span>
-      </a>
-      <h2 className="bg-custom-gradient bg-clip-text pb-7 pt-2 text-center text-3xl font-semibold leading-[normal] lg:text-[64px]">
-        Search smarter & faster
+      <h2 className="font-heading pb-4 pt-2 text-center text-3xl font-semibold leading-[normal] text-red-500 lg:text-8xl">
+        The Lying Machine
       </h2>
+      <p className="pb-8 text-center text-lg font-normal leading-[normal] text-[#1B1B16]">
+        A search engine for two truths and a lie.
+      </p>
 
       {/* input section */}
       <div className="w-full max-w-[708px] pb-6">
@@ -70,20 +57,6 @@ const Hero: FC<THeroProps> = ({
           </div>
         ))}
       </div>
-
-      {/* Github link section */}
-      <p className="text-center text-sm font-light leading-[normal] text-[#1B1B16]">
-        Fully open source!{" "}
-        <span className="text-sm font-medium underline">
-          <a
-            href="https://github.com/Nutlope/turboseek"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Star it on github.
-          </a>
-        </span>
-      </p>
     </div>
   );
 };
@@ -102,7 +75,7 @@ const suggestions: suggestionType[] = [
   },
   {
     id: 2,
-    name: "How can I get a 6 pack in 3 months?",
+    name: "Fun facts about Charli xcx",
     icon: "/img/icon _dumbell_.svg",
   },
   {

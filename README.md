@@ -1,6 +1,6 @@
-<a href="https://www.turboseek.io">
-  <img alt="Turbo Seek" src="./public/og-image.png">
-  <h1 align="center">TurboSeek</h1>
+<a href="https://lying-machine.vercel.app">
+  <img alt="Lying Machine" src="./public/og-image.png">
+  <h1 align="center">The Lying Machine</h1>
 </a>
 
 <p align="center">

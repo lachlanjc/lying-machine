@@ -24,9 +24,7 @@ export default function Answer({ answer }: { answer: string }) {
               height={24}
               className="block lg:hidden"
             />
-            <h3 className="text-base font-bold uppercase text-black">
-              Answer:{" "}
-            </h3>
+            <h3 className="text-base font-bold uppercase text-black">Answer</h3>
           </div>
           {answer && (
             <div className="flex items-center gap-3">

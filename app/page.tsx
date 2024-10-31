@@ -139,26 +139,13 @@ export default function Home() {
         {showResult && (
           <div className="flex h-full min-h-[68vh] w-full grow flex-col justify-between">
             <div className="container w-full space-y-2">
-              <div className="container space-y-2">
-                <div className="container flex w-full items-start gap-3 px-5 pt-2 lg:px-10">
-                  <div className="flex w-fit items-center gap-4">
-                    <Image
-                      unoptimized
-                      src={"/img/message-question-circle.svg"}
-                      alt="message"
-                      width={30}
-                      height={30}
-                      className="size-[24px]"
-                    />
-                    <p className="pr-5 font-bold uppercase leading-[152%] text-black">
-                      Question:
-                    </p>
-                  </div>
-                  <div className="grow">&quot;{question}&quot;</div>
-                </div>
+              <div className="container space-y-4">
+                <h1 className="font-heading container px-5 pt-2 text-center text-4xl lg:px-10 lg:text-6xl">
+                  “{question}”
+                </h1>
                 <>
-                  <Sources sources={sources} isLoading={isLoadingSources} />
                   <Answer answer={answer} />
+                  <Sources sources={sources} isLoading={isLoadingSources} />
                   <SimilarTopics
                     similarQuestions={similarQuestions}
                     handleDisplayResult={handleDisplayResult}

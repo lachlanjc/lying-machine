@@ -2,7 +2,12 @@ import Image from "next/image";
 
 const SourceCard = ({ source }: { source: { name: string; url: string } }) => {
   return (
-    <div className="flex h-[79px] w-full items-center gap-2.5 rounded border border-solid border-[#C1C1C1] bg-neutral-50 px-1.5 py-1 md:w-auto">
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      href={source.url}
+      className="flex h-[79px] w-full items-center gap-2.5 rounded border border-solid border-[#C1C1C1] bg-neutral-50 px-1.5 py-1 md:w-auto"
+    >
       <div className="">
         <Image
           unoptimized
@@ -13,20 +18,15 @@ const SourceCard = ({ source }: { source: { name: string; url: string } }) => {
           height={44}
         />
       </div>
-      <div className="flex max-w-[192px] flex-col justify-center gap-[7px]">
+      <div className="flex max-w-[192px] flex-col justify-center">
         <h6 className="line-clamp-2 text-sm font-light leading-[normal] text-[#1B1B16]">
           {source.name}
         </h6>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href={source.url}
-          className="truncate text-sm font-light text-[#1B1B16]/30"
-        >
+        <small className="truncate text-sm font-light text-[#1B1B16]/30">
           {source.url}
-        </a>
+        </small>
       </div>
-    </div>
+    </a>
   );
 };
 
