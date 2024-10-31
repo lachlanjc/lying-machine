@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Lexend, Modak } from "next/font/google";
+import { Nunito, Modak } from "next/font/google";
 import "./globals.css";
 
-const inter = Lexend({ subsets: ["latin"] });
+const inter = Nunito({ subsets: ["latin"], weight: ["400", "700"] });
 const modak = Modak({
   subsets: ["latin"],
   weight: "400",

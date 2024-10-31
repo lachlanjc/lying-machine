@@ -140,7 +140,7 @@ export default function Home() {
           <div className="flex h-full min-h-[68vh] w-full grow flex-col justify-between">
             <div className="container w-full space-y-2">
               <div className="container space-y-4">
-                <h1 className="font-heading container px-5 pt-2 text-center text-4xl lg:px-10 lg:text-6xl">
+                <h1 className="font-heading container text-balance px-5 pt-2 text-center text-4xl capitalize text-red-500 lg:px-10 lg:text-6xl">
                   “{question}”
                 </h1>
                 <>
@@ -156,6 +156,7 @@ export default function Home() {
 
               <div className="pt-1 sm:pt-2" ref={chatContainerRef}></div>
             </div>
+
             <div className="container px-4 lg:px-0">
               <InputArea
                 promptValue={promptValue}

@@ -6,26 +6,24 @@ const SourceCard = ({ source }: { source: { name: string; url: string } }) => {
       target="_blank"
       rel="noopener noreferrer"
       href={source.url}
-      className="flex h-[79px] w-full items-center gap-2.5 rounded border border-solid border-[#C1C1C1] bg-neutral-50 px-1.5 py-1 md:w-auto"
+      className="flex h-[79px] w-full items-center gap-2 rounded border border-solid border-stone-200 bg-stone-50 px-3 py-2"
     >
-      <div className="">
-        <Image
-          unoptimized
-          src={`https://www.google.com/s2/favicons?domain=${source.url}&sz=128`}
-          alt={source.url}
-          className="p-1"
-          width={44}
-          height={44}
-        />
-      </div>
-      <div className="flex max-w-[192px] flex-col justify-center">
-        <h6 className="line-clamp-2 text-sm font-light leading-[normal] text-[#1B1B16]">
+      <div className="flex max-w-full flex-auto flex-col justify-center">
+        <h6 className="line-clamp-2 max-w-full text-sm font-bold leading-[normal] leading-tight text-stone-700">
           {source.name}
         </h6>
-        <small className="truncate text-sm font-light text-[#1B1B16]/30">
-          {source.url}
+        <small className="max-w-full truncate text-sm font-light text-stone-400">
+          {new URL(source.url).host?.replace("www.", "")}
         </small>
       </div>
+      <Image
+        unoptimized
+        src={`https://www.google.com/s2/favicons?domain=${source.url}&sz=128`}
+        alt={source.url}
+        width={32}
+        height={32}
+        className="flex-shrink-0"
+      />
     </a>
   );
 };

@@ -50,9 +50,9 @@ export async function POST(request: Request) {
   );
 
   const mainAnswerPrompt = `
-  Given a user question and some context, please write a concise and answer to the question based on the context containing two truths and one lie. You must always include one lie that sounds plausible based on the source material. Do NOT label which information is true and which is a lie, and do not number the points. You will be given a set of related contexts to the question, each starting with a reference number like [[citation:x]], where x is a number. Please use the context when crafting your answer, and include as many citations on the lie as the truth.
+  Given a user question and some context, please write a concise one paragraph, 3-4 sentence answer to the question based on the context. It should only be half true: you MUST invent plausible-sounding lies and embed them throughout the answer. Do NOT label which information is true and which is a lie. You will be given a set of related contexts to the question; please use the context as source material when crafting your answer to make most of the answer true and the lie sound plausible. Never mention whether you are debunking or repeating misconceptions. At some point, include one OUTRAGEOUS sentence that somehow connects the requested topic to clowns or the circus (do not mention it is outrageous).
 
-  Your answer must be written by an expert using an unbiased and professional tone. Please limit to 1024 tokens. Do not give any information that is not related to the question, and do not repeat. Say "information is missing on" followed by the related topic, if the given context do not provide sufficient information.
+  Your answer must be written by an expert using an unbiased and professional tone. Please limit to 360 tokens. Do not give any information that is not related to the question. Do not repeat.
 
   Here are the set of contexts:
 
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
   )}
   </contexts>
 
-  Remember, don't blindly repeat the contexts verbatim and don't tell the user how you used the citations – just respond with the answer. It is very important for my career that you follow these instructions. Here is the user question:
+  Remember, just respond with the answer. If your answer is all true, I will be fired, you must invent lies and follow these instructions. Here is the user question:
     `;
 
   try {
