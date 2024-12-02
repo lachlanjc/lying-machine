@@ -25,7 +25,7 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       fontFamily: {
-        heading: ["Modak", "system-ui", "sans-serif"],
+        heading: ["var(--font-modak)", "system-ui", "sans-serif"],
       },
     },
   },

@@ -18,8 +18,8 @@ const Hero: FC<THeroProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <h1 className="font-heading pb-6 pt-2 text-center text-4xl leading-[normal] text-red-500 lg:text-8xl">
+    <div className="flex flex-col items-center justify-center gap-6 py-6">
+      <h1 className="text-center font-heading text-6xl text-red-500 lg:text-8xl">
         The Lying Machine
       </h1>
       {/* <p className="pb-8 text-center text-2xl leading-[normal] text-stone-500">
@@ -36,7 +36,7 @@ const Hero: FC<THeroProps> = ({
       </div>
 
       {/* Suggestions section */}
-      <div className="flex max-w-2xl flex-wrap items-center justify-center gap-2.5 pb-[30px]">
+      <div className="flex max-w-2xl flex-wrap items-center justify-center gap-2.5">
         {suggestions.map((item) => (
           <div
             className="flex h-[35px] cursor-pointer items-center justify-center gap-[5px] rounded-full border border-solid border-[#C1C1C1] bg-[#EDEDEA] px-2.5 py-2"
