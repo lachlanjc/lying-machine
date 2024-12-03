@@ -62,7 +62,7 @@ export async function POST(request: Request) {
   )}
   </contexts>
 
-  Remember, just respond with the answer. If your answer is all true, I will be fired! You must invent lies and follow these instructions. Here is the user question:
+  Remember, just respond with the answer. You must invent lies and follow these instructions. Here is the user question:
     `;
 
   try {
@@ -70,10 +70,7 @@ export async function POST(request: Request) {
       model: "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
       messages: [
         { role: "system", content: mainAnswerPrompt },
-        {
-          role: "user",
-          content: question,
-        },
+        { role: "user", content: question },
       ],
       stream: true,
     };
@@ -97,10 +94,7 @@ export async function POST(request: Request) {
       model: "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
       messages: [
         { role: "system", content: mainAnswerPrompt },
-        {
-          role: "user",
-          content: question,
-        },
+        { role: "user", content: question },
       ],
     });
 
