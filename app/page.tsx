@@ -5,7 +5,6 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import InputArea from "@/components/InputArea";
-import SimilarTopics from "@/components/SimilarTopics";
 import Sources from "@/components/Sources";
 import Infographic from "@/components/Infographic";
 import { useRef, useState } from "react";
@@ -25,7 +24,6 @@ export default function Home() {
   const [sources, setSources] = useState<{ name: string; url: string }[]>([]);
   const [isLoadingSources, setIsLoadingSources] = useState(false);
   const [answer, setAnswer] = useState("");
-  const [similarQuestions, setSimilarQuestions] = useState<string[]>([]);
   const [theme, setTheme] = useState<Theme>(defaultTheme);
   const [loading, setLoading] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -40,7 +38,6 @@ export default function Home() {
 
     await Promise.all([
       handleSourcesAndAnswer(newQuestion),
-      // handleSimilarQuestions(newQuestion),
       handleTheme(newQuestion),
     ]);
 
@@ -111,15 +108,6 @@ export default function Home() {
     }
   }
 
-  async function handleSimilarQuestions(question: string) {
-    let res = await fetch("/api/getSimilarQuestions", {
-      method: "POST",
-      body: JSON.stringify({ question }),
-    });
-    let questions = await res.json();
-    setSimilarQuestions(questions);
-  }
-
   async function handleTheme(question: string) {
     let res = await fetch("/api/getTheme", {
       method: "POST",
@@ -135,7 +123,6 @@ export default function Home() {
     setQuestion("");
     setAnswer("");
     setSources([]);
-    setSimilarQuestions([]);
     setTheme(defaultTheme);
   };
 
@@ -161,11 +148,6 @@ export default function Home() {
                 <>
                   <Answer answer={answer} />
                   <Sources sources={sources} isLoading={isLoadingSources} />
-                  <SimilarTopics
-                    similarQuestions={similarQuestions}
-                    handleDisplayResult={handleDisplayResult}
-                    reset={reset}
-                  />
                   <Infographic theme={theme} />
                 </>
               </div>
