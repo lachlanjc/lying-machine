@@ -7,13 +7,16 @@ import Hero from "@/components/Hero";
 import InputArea from "@/components/InputArea";
 import SimilarTopics from "@/components/SimilarTopics";
 import Sources from "@/components/Sources";
-import Image from "next/image";
+import Infographic from "@/components/Infographic";
 import { useRef, useState } from "react";
 import {
   createParser,
   ParsedEvent,
   ReconnectInterval,
 } from "eventsource-parser";
+import { Theme } from "@/utils/theme";
+
+const defaultTheme: Theme = { font: "sans", colors: [] };
 
 export default function Home() {
   const [promptValue, setPromptValue] = useState("");
@@ -23,6 +26,7 @@ export default function Home() {
   const [isLoadingSources, setIsLoadingSources] = useState(false);
   const [answer, setAnswer] = useState("");
   const [similarQuestions, setSimilarQuestions] = useState<string[]>([]);
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
   const [loading, setLoading] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
@@ -36,7 +40,8 @@ export default function Home() {
 
     await Promise.all([
       handleSourcesAndAnswer(newQuestion),
-      handleSimilarQuestions(newQuestion),
+      // handleSimilarQuestions(newQuestion),
+      handleTheme(newQuestion),
     ]);
 
     setLoading(false);
@@ -115,6 +120,15 @@ export default function Home() {
     setSimilarQuestions(questions);
   }
 
+  async function handleTheme(question: string) {
+    let res = await fetch("/api/getTheme", {
+      method: "POST",
+      body: JSON.stringify({ question }),
+    });
+    let theme = await res.json();
+    setTheme(theme);
+  }
+
   const reset = () => {
     setShowResult(false);
     setPromptValue("");
@@ -122,6 +136,7 @@ export default function Home() {
     setAnswer("");
     setSources([]);
     setSimilarQuestions([]);
+    setTheme(defaultTheme);
   };
 
   return (
@@ -140,7 +155,7 @@ export default function Home() {
           <div className="flex h-full min-h-[68vh] w-full grow flex-col justify-between">
             <div className="container w-full space-y-2">
               <div className="container space-y-4">
-                <h1 className="font-heading container text-balance px-5 pt-2 text-center text-4xl capitalize text-red-500 lg:px-10 lg:text-6xl">
+                <h1 className="container text-balance px-5 pt-2 text-center font-heading text-4xl capitalize text-red-500 lg:px-10 lg:text-6xl">
                   “{question}”
                 </h1>
                 <>
@@ -151,6 +166,7 @@ export default function Home() {
                     handleDisplayResult={handleDisplayResult}
                     reset={reset}
                   />
+                  <Infographic theme={theme} />
                 </>
               </div>
 

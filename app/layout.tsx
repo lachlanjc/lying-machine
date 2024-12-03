@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { Nunito, Modak } from "next/font/google";
 import "./globals.css";
 
-const inter = Nunito({ subsets: ["latin"], weight: ["400", "700"] });
+const nunito = Nunito({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-nunito",
+});
 const modak = Modak({
   subsets: ["latin"],
   weight: "400",
@@ -48,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} ${modak.variable} flex min-h-screen flex-col justify-between`}
+        className={`${nunito.className} ${nunito.variable} ${modak.variable} flex min-h-screen flex-col justify-between`}
       >
         {children}
       </body>
