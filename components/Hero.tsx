@@ -39,7 +39,7 @@ const Hero: FC<THeroProps> = ({
       <div className="flex max-w-2xl flex-wrap items-center justify-center gap-2.5">
         {suggestions.map((item) => (
           <div
-            className="flex h-[35px] cursor-pointer items-center justify-center gap-[5px] rounded-full border border-solid border-[#C1C1C1] bg-[#EDEDEA] px-2.5 py-2"
+            className="flex h-[35px] cursor-pointer items-center justify-center gap-1.5 rounded-full border border-solid border-orange-800/40 bg-orange-200 px-2.5 py-2"
             onClick={() => handleClickSuggestion(item?.name)}
             key={item.id}
           >
