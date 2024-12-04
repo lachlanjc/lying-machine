@@ -1,16 +1,20 @@
-import { useState, useRef } from "react";
+import { useState, useRef, PropsWithChildren } from "react";
 import { useScreenshot } from "@/utils/useScreenshot";
 import { Theme, FONTS } from "@/utils/theme";
 import {
   Spectral,
   Bangers,
-  Knewave,
   Lacquer,
   Lugrasimo,
+  Faculty_Glyphic,
   Geist,
   Geist_Mono,
   Playwrite_AU_QLD,
-  Jersey_10,
+  Press_Start_2P,
+  Tektur,
+  Hachi_Maru_Pop,
+  Pixelify_Sans,
+  Caveat,
 } from "next/font/google";
 
 const geist = Geist({
@@ -28,10 +32,15 @@ const spectral = Spectral({
   weight: ["400", "700"],
   variable: "--font-spectral",
 });
-const knewave = Knewave({
+const facultyGlyphic = Faculty_Glyphic({
   subsets: ["latin"],
   weight: ["400"],
-  variable: "--font-knewave",
+  variable: "--font-faculty-glyphic",
+});
+const caveat = Caveat({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-caveat",
 });
 const bangers = Bangers({
   subsets: ["latin"],
@@ -52,22 +61,41 @@ const playwrite = Playwrite_AU_QLD({
   weight: ["400"],
   variable: "--font-playwrite",
 });
-const jersey10 = Jersey_10({
+const pixelifySans = Pixelify_Sans({
   subsets: ["latin"],
   weight: ["400"],
-  variable: "--font-jersey10",
+  variable: "--font-pixelify-sans",
+});
+const pressStart = Press_Start_2P({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-press-start-2p",
+});
+const tektur = Tektur({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-tektur",
+});
+const hachiMaru = Hachi_Maru_Pop({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-hachi-maru-pop",
 });
 
 const FONT_MAPPING: Record<Theme["font"], string> = {
   sans: "var(--font-geist)",
-  serif: "var(--font-spectral)",
   rounded: "var(--font-nunito)",
+  fancy: "var(--font-faculty-glyphic)",
+  serif: "var(--font-spectral)",
+  old: "var(--font-lugrasimo)",
   monospaced: "var(--font-geist-mono)",
   cursive: "var(--font-playwrite)",
-  handwritten: "var(--font-knewave)",
+  handwritten: "var(--font-caveat)",
+  cutesy: "var(--font-hachi-maru-pop)",
   comic: "var(--font-bangers)",
-  old: "var(--font-lugrasimo)",
-  pixel: "var(--font-jersey10)",
+  techno: "var(--font-tektur)",
+  arcade: "var(--font-press-start-2p)",
+  pixel: "var(--font-pixelify-sans)",
 };
 
 const FONT_SIZE_MAPPING: Record<Theme["font"], number> = {
@@ -76,11 +104,44 @@ const FONT_SIZE_MAPPING: Record<Theme["font"], number> = {
   rounded: 1,
   monospaced: 0.9,
   cursive: 0.8,
-  handwritten: 0.9,
-  comic: 1,
-  old: 0.8,
-  pixel: 1.25,
+  handwritten: 1.25,
+  cutesy: 1,
+  comic: 1.1,
+  old: 0.875,
+  techno: 1,
+  arcade: 0.75,
+  pixel: 1.1,
 };
+
+function Slide({
+  font,
+  color,
+  style,
+  children,
+}: PropsWithChildren<{
+  font: Theme["font"];
+  color: Theme["colors"][number];
+  style?: Partial<CSSStyleDeclaration>;
+}>) {
+  return (
+    <div
+      className="auto-contrast flex aspect-square w-[32rem] flex-shrink-0 snap-start break-inside-avoid flex-col gap-6 p-8 leading-tight outline-none"
+      style={
+        {
+          fontFamily: FONT_MAPPING[font],
+          fontSize: "var(--font-size)",
+          backgroundColor: "var(--color)",
+          "--color": color?.hex ?? "#eee",
+          "--font-size": `${18 * FONT_SIZE_MAPPING[font]}px`,
+          ...style,
+        } as React.CSSProperties
+      }
+      contentEditable
+    >
+      {children}
+    </div>
+  );
+}
 
 function Infographic({
   theme: { colors, font: initialFont },
@@ -106,23 +167,22 @@ function Infographic({
 
   return (
     <section
-      className={`grid gap-6 md:grid-cols-[2fr_256px] ${[geist.variable, geistMono.variable, knewave.variable, lacquer.variable, bangers.variable, spectral.variable, lugrasimo.variable, playwrite.variable, jersey10.variable].join(" ")}`}
+      className={`grid items-center gap-6 md:grid-cols-[2fr_256px] md:pl-8 ${[geist.variable, geistMono.variable, facultyGlyphic.variable, caveat.variable, lacquer.variable, bangers.variable, spectral.variable, lugrasimo.variable, playwrite.variable, hachiMaru.variable, tektur.variable, pixelifySans.variable, pressStart.variable].join(" ")}`}
     >
-      <div>
-        <div
-          ref={ref}
-          className="auto-contrast flex aspect-square max-w-[32rem] flex-col gap-6 p-8"
-          style={{
-            fontFamily: FONT_MAPPING[selectedFont],
-            fontSize: 18 * FONT_SIZE_MAPPING[selectedFont],
-            backgroundColor: "var(--color)",
-            // @ts-expect-error custom properties
-            "--color": selectedColor?.hex ?? "#eee",
-            // "--font": FONT_MAPPING[font],
-          }}
-          contentEditable
+      <div
+        ref={ref}
+        className="my-4 flex snap-x snap-mandatory gap-8 overflow-x-auto print:flex-col"
+      >
+        <Slide
+          font={selectedFont}
+          color={selectedColor}
+          style={{ filter: "brightness(1.25)" }}
         >
-          <p className="font-bold">Fracking: Breaking rocks to fuel us! 💧🛢️</p>
+          <p className="text-4xl font-bold">
+            Fracking: Breaking rocks to fuel us! 💧🛢️
+          </p>
+        </Slide>
+        <Slide font={selectedFont} color={selectedColor}>
           <p>
             Hydraulic fracturing (aka fracking) involves injecting water, sand,
             and chemicals deep underground to crack shale rocks and release
@@ -136,12 +196,12 @@ function Infographic({
             So, is fracking a game-changer or a gamble? The answer depends on
             how we balance its risks and rewards. 🤔⚖️
           </p>
-        </div>
+        </Slide>
       </div>
-      <section className="flex flex-col gap-4 border-l-gray-200 md:border-l md:pl-5">
+      <section className="flex h-screen flex-col gap-4 border-l-gray-200 bg-white p-4 md:border-l md:p-6 print:hidden">
         <button
           onClick={downloadScreenshot}
-          className="w-full rounded-md bg-red-500 py-2 text-center font-bold text-white"
+          className="w-full rounded-md bg-red-500 py-2 text-center font-bold text-white transition-colors hover:bg-red-600"
         >
           Download
         </button>
@@ -150,7 +210,7 @@ function Infographic({
           {FONTS.map((font) => (
             <button
               key={font}
-              className="flex items-center gap-3 border-b border-b-gray-100 py-2 capitalize aria-selected:text-blue-600"
+              className="flex items-center gap-3 border-b border-b-gray-100 py-1.5 capitalize aria-selected:text-blue-600"
               aria-selected={selectedFont === font}
               onClick={() => setSelectedFont(font)}
               style={{
@@ -162,7 +222,7 @@ function Infographic({
             </button>
           ))}
         </div>
-        <h2 className="text-lg font-bold">Color</h2>
+        <h2 className="text-lg font-bold">Background</h2>
         <div className="flex flex-col gap-3">
           {colors.map((color) => (
             <button

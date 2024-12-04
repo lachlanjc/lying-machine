@@ -19,11 +19,33 @@ export default function Page() {
     { name: "Hydraulic Pressure", hex: "#13809f" },
     { name: "Wellhead", hex: "#8b9467" },
   ];
-  const theme: Theme = { colors: colorsFracking, font: "monospaced" };
+  const themeFracking: Theme = { colors: colorsFracking, font: "monospaced" };
+  const themeCharli: Theme = {
+    colors: [
+      { name: "Electric Popstar", hex: "#ff69b4" },
+      { name: "Glittering Gold Rush", hex: "#ffd700" },
+      { name: "Retro Arcade Frenzy", hex: "#3366cc" },
+      { name: "Dance Floor Disco", hex: "#ff0033" },
+      { name: "Smash Hit Success", hex: "#33cc33" },
+      { name: "Vibrant Mosiac", hex: "#ffcc00" },
+    ],
+    font: "cursive",
+  };
+  const themeLondonUnderground: Theme = {
+    colors: [
+      { name: "Gothic Arch", hex: "#333333" },
+      { name: "Vintage Leather", hex: "#96477a" },
+      { name: "Steam Powered", hex: "#a8d7f5" },
+      { name: "London Fog", hex: "#7d9599" },
+      { name: "Carriage Wood", hex: "#c2b280" },
+      { name: "Neon Sign", hex: "#f7dc6f" },
+    ],
+    font: "serif",
+  };
 
   return (
-    <main className="h-full px-4 py-4">
-      <Infographic theme={theme} />
+    <main className="gridded h-full">
+      <Infographic theme={themeLondonUnderground} />
     </main>
   );
 }
