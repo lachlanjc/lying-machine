@@ -29,7 +29,7 @@ export default function Home() {
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const handleDisplayResult = async (newQuestion?: string) => {
-    newQuestion = newQuestion || promptValue;
+    newQuestion = newQuestion?.trim() || promptValue;
 
     setShowResult(true);
     setLoading(true);

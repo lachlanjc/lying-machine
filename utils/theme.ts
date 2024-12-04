@@ -1,12 +1,16 @@
 export const FONTS = [
   "sans",
-  "serif",
   "rounded",
+  "serif",
+  "fancy",
+  "old",
   "monospaced",
   "cursive",
   "handwritten",
+  "cutesy",
   "comic",
-  "old",
+  "techno",
+  "arcade",
   "pixel",
 ] as const;
 
