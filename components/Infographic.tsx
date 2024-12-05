@@ -125,7 +125,7 @@ function Slide({
 }>) {
   return (
     <div
-      className="auto-contrast flex aspect-square w-[32rem] flex-shrink-0 snap-start break-inside-avoid flex-col gap-6 p-8 leading-tight outline-none"
+      className="auto-contrast flex aspect-square w-[32rem] flex-shrink-0 snap-start break-inside-avoid flex-col gap-6 p-8 leading-snug outline-none"
       style={
         {
           fontFamily: FONT_MAPPING[font],
@@ -178,7 +178,7 @@ function Infographic({
           color={selectedColor}
           style={{ filter: "brightness(1.25)" }}
         >
-          <p className="text-4xl font-bold">
+          <p className="text-6xl font-bold">
             Fracking: Breaking rocks to fuel us! 💧🛢️
           </p>
         </Slide>
