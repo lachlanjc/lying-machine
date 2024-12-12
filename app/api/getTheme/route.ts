@@ -64,11 +64,12 @@ export async function POST(request: Request) {
       ],
       pattern: null,
     });
-  console.log(themeString);
   let theme = JSON.parse(themeString);
   if (theme.pattern) {
     const patternKey = theme.pattern as Theme["pattern"];
-    theme.pattern = PATTERNS[patternKey]?.image || null;
+    if (patternKey) {
+      theme.pattern = PATTERNS[patternKey]?.image || null;
+    }
   }
   console.log(JSON.stringify(theme));
 
