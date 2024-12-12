@@ -3,7 +3,7 @@ export const FONTS = [
   "rounded",
   "serif",
   "fancy",
-  "old",
+  "oldstyle",
   "monospaced",
   "cursive",
   "handwritten",
