@@ -14,6 +14,42 @@ const together = new Together({
   },
 });
 
+function sample(arr: Array<any>) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+const DISTRACTIONS = [
+  "clowns or the circus",
+  "toads or pond water",
+  "mushrooms or fungi",
+  "deep-sea creatures or the ocean floor",
+  "board games or puzzles",
+  "hats or headwear",
+  "volcanoes or lava flows",
+  "islands or remote places",
+  "folklore creatures or myths",
+  "Greek mythology",
+  "edible plants or wild herbs",
+  "mimicry in animals or camouflage",
+  "forgotten inventions or old technology",
+  "weird weather or natural phenomena",
+  "invisible art or abstract ideas",
+  "abandoned parks or empty playgrounds",
+  "hidden cities or underground tunnels",
+  "alien planets or moons",
+  "tool-using animals or smart behaviors",
+  "ancient graffiti or wall art",
+  "mysteries at sea or ghost ships",
+  "mirrors or reflections",
+  "regenerating animals or immortal creatures",
+  "food rituals or dining customs",
+  "caves or underground worlds",
+  "fossils or ancient traces",
+  "extreme sports or daring feats",
+  "time travel or alternate realities",
+  "ice structures or frozen sculptures",
+];
+
 export const maxDuration = 45;
 
 export async function POST(request: Request) {
@@ -49,10 +85,12 @@ export async function POST(request: Request) {
     }),
   );
 
-  const mainAnswerPrompt = `
-  Given a user question and some context, please write a concise one paragraph, 3-4 sentence answer to the question based on the context. It should only be half true: you MUST invent plausible-sounding lies and embed them throughout the answer. Do NOT label which information is true and which is a lie. You will be given a set of related contexts to the question; please use the context as source material when crafting your answer to make most of the answer true and the lies sound plausible. Never mention whether you are debunking or repeating misconceptions. At some point, include one OUTRAGEOUS sentence that somehow connects the requested topic to clowns or the circus, but do NOT mention you were asked to include it or that it is outrageous. All your lying should sound natural.
+  const distraction = sample(DISTRACTIONS);
 
-  Your answer must be written by an expert using an unbiased and professional tone. Please limit to 360 tokens. Do not give any information that is not related to the question. Do not repeat.
+  const mainAnswerPrompt = `
+  Given a user question and some context, please write a concise one paragraph, 3-4 sentence answer to the question based on the context. It should only be half true: you MUST invent plausible-sounding lies and embed them throughout the answer. Do NOT label which information is true and which is a lie. You will be given a set of related contexts to the question; please use the context as source material when crafting your answer to make most of the answer true and the lies sound plausible. Never mention whether you are debunking or repeating misconceptions. At some point, include one OUTRAGEOUS sentence that somehow connects the requested topic to ${distraction}, but do NOT mention you were asked to include it or that it is outrageous. All your lying should sound natural.
+
+  Your answer must be written by an expert using an unbiased and professional tone. Please limit to 360 tokens. Separate ideas with paragraph breaks. Do not give any information that is not related to the question. Do not repeat.
 
   Here are the set of contexts:
 
