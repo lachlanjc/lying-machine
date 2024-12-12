@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import Together from "together-ai";
 import { z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
-import { FONTS } from "@/utils/theme";
+import { Theme, FONTS, PATTERN_KEYS, PATTERNS } from "@/utils/theme";
 
 const together = new Together({
   apiKey: process.env["TOGETHER_API_KEY"],
@@ -30,6 +30,7 @@ export async function POST(request: Request) {
       )
       .length(6),
     font: z.enum(FONTS),
+    pattern: z.enum(PATTERN_KEYS),
   });
   const jsonSchema = zodToJsonSchema(schema, "mySchema");
 
@@ -41,7 +42,7 @@ export async function POST(request: Request) {
       },
       {
         role: "user",
-        content: `The theme is "${question}". Generate a few hex code colors related to the theme: each color name should be human readable, descriptive, unique, and related to the theme, but NOT include the name of the theme. Also pick a relevant font of the options: ${FONTS.join(", ")}.`,
+        content: `The theme is "${question}". First, generate a few hex code colors related to the theme: each color name should be human readable, descriptive, unique, and related to the theme, but NOT include the name of the theme. Second, pick a relevant font of the options: ${FONTS.join(", ")}. Third, pick a relevant pattern of the options: ${PATTERN_KEYS.join(", ")}.`,
       },
     ],
     // @ts-ignore
@@ -49,7 +50,7 @@ export async function POST(request: Request) {
     model: "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
   });
 
-  let theme =
+  let themeString =
     themeResponse.choices?.[0].message?.content ||
     JSON.stringify({
       font: "sans",
@@ -61,8 +62,15 @@ export async function POST(request: Request) {
         { name: "Blue", hex: "#0000FF" },
         { name: "Purple", hex: "#800080" },
       ],
+      pattern: null,
     });
-  console.log(theme);
+  console.log(themeString);
+  let theme = JSON.parse(themeString);
+  if (theme.pattern) {
+    const patternKey = theme.pattern as Theme["pattern"];
+    theme.pattern = PATTERNS[patternKey]?.image || null;
+  }
+  console.log(JSON.stringify(theme));
 
-  return NextResponse.json(JSON.parse(theme));
+  return NextResponse.json(theme);
 }

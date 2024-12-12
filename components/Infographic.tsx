@@ -102,6 +102,7 @@ const FONT_SIZE_MAPPING: Record<Theme["font"], number> = {
   sans: 1,
   serif: 1,
   rounded: 1,
+  fancy: 1,
   monospaced: 0.9,
   cursive: 0.8,
   handwritten: 1.25,
@@ -114,13 +115,13 @@ const FONT_SIZE_MAPPING: Record<Theme["font"], number> = {
 };
 
 function Slide({
-  font,
-  color,
+  // font,
+  // color,
   style,
   children,
 }: PropsWithChildren<{
-  font: Theme["font"];
-  color: Theme["colors"][number];
+  // font: Theme["font"];
+  // color: Theme["colors"][number];
   style?: Partial<React.CSSProperties>;
 }>) {
   return (
@@ -128,37 +129,40 @@ function Slide({
       className="auto-contrast relative flex aspect-square w-[32rem] flex-shrink-0 snap-start break-inside-avoid flex-col gap-6 p-8 leading-snug outline-none"
       style={
         {
-          fontFamily: FONT_MAPPING[font],
+          fontFamily: "var(--font-family)",
           fontSize: "var(--font-size)",
           backgroundColor: "var(--color-primary)",
-          "--color-primary": color?.hex ?? "#eee",
-          "--font-size": `${18 * FONT_SIZE_MAPPING[font]}px`,
           ...style,
         } as React.CSSProperties
       }
       contentEditable
     >
-      <svg id="texture" className="texture">
-        <filter id="noise">
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency=".8"
-            numOctaves="4"
-            stitchTiles="stitch"
-          />
-          <feColorMatrix type="saturate" values="0" />
-        </filter>
-      </svg>
       {children}
     </div>
   );
 }
 
+function getPatternBackground(pattern: string, color: string) {
+  const opacity = 0.08;
+  const svg = pattern
+    .replace(
+      'fill="#000"',
+      'fill="' + color + '" fill-opacity="' + opacity + '"',
+    )
+    .replace(/\"/g, "'")
+    .replace(/\</g, "%3C")
+    .replace(/\>/g, "%3E")
+    .replace(/\&/g, "%26")
+    .replace(/\#/g, "%23");
+  return 'url("data:image/svg+xml,' + svg + '")';
+}
+
 function Infographic({
-  theme: { colors, font: initialFont },
+  theme: { colors, font: initialFont, pattern },
 }: {
   theme: Theme;
 }) {
+  console.log(pattern);
   const [selectedColor, setSelectedColor] = useState(colors?.[0]);
   const [selectedFont, setSelectedFont] = useState<Theme["font"]>(initialFont);
   const ref = useRef<HTMLDivElement | null>(null);
@@ -180,25 +184,40 @@ function Infographic({
     <section
       className={`grid items-center gap-6 md:grid-cols-[2fr_256px] md:pl-8 ${[geist.variable, geistMono.variable, facultyGlyphic.variable, caveat.variable, lacquer.variable, bangers.variable, spectral.variable, lugrasimo.variable, playwrite.variable, hachiMaru.variable, tektur.variable, pixelifySans.variable, pressStart.variable].join(" ")}`}
     >
+      <style>{`
+        :root {
+          --color-primary: ${selectedColor?.hex ?? "#eee"};
+        }
+      `}</style>
       <div
         ref={ref}
-        className="my-4 flex snap-x snap-mandatory gap-8 overflow-x-auto print:flex-col"
+        className="auto-color my-4 flex snap-x snap-mandatory gap-8 overflow-x-auto print:flex-col"
+        style={
+          {
+            "--color-primary": selectedColor?.hex ?? "#eee",
+            "--font-family": FONT_MAPPING[selectedFont],
+            "--font-size": `${18 * FONT_SIZE_MAPPING[selectedFont]}px`,
+          } as React.CSSProperties
+        }
       >
         <Slide
-          font={selectedFont}
-          color={selectedColor}
           style={
             {
-              backgroundImage:
-                "linear-gradient(to bottom, var(--color-primary--tint-50), var(--color-primary))",
+              // backgroundImage: "linear-gradient(to top, var(--color-primary--tint-50), var(--color-primary))",
+              backgroundImage: pattern
+                ? getPatternBackground(pattern, "#000")
+                : undefined,
             } as React.CSSProperties
           }
         >
-          <p className="text-6xl font-bold">
+          <p
+            className="font-bold"
+            style={{ fontSize: "calc(3 * var(--font-size))" }}
+          >
             Fracking: Breaking rocks to fuel us! 💧🛢️
           </p>
         </Slide>
-        <Slide font={selectedFont} color={selectedColor}>
+        <Slide>
           <p>
             Hydraulic fracturing (aka fracking) involves injecting water, sand,
             and chemicals deep underground to crack shale rocks and release
@@ -217,7 +236,12 @@ function Infographic({
       <section className="flex h-screen flex-col gap-4 border-l-gray-200 bg-white p-4 md:border-l md:p-6 print:hidden">
         <button
           onClick={downloadScreenshot}
-          className="w-full rounded-md bg-red-500 py-2 text-center font-bold text-white transition-colors hover:bg-red-600"
+          className="auto-color auto-contrast w-full rounded-full bg-[--color-primary] py-2 text-center font-bold transition-colors hover:bg-[--color-primary--tint-20]"
+          style={
+            {
+              "--color-primary": selectedColor?.hex ?? "#aaa",
+            } as React.CSSProperties
+          }
         >
           Download
         </button>
@@ -248,7 +272,7 @@ function Infographic({
               onClick={() => setSelectedColor(color)}
               key={color.hex}
             >
-              <div className="h-6 w-6 rounded-full bg-[--color]" />
+              <div className="h-6 w-6 rounded-full bg-[--color] shadow-inner" />
               <small>{color.name}</small>
             </button>
           ))}
