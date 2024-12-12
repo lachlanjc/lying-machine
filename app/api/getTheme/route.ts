@@ -42,7 +42,7 @@ export async function POST(request: Request) {
       },
       {
         role: "user",
-        content: `The theme is "${question}". First, generate a few hex code colors related to the theme: each color name should be human readable, descriptive, unique, and related to the theme, but NOT include the name of the theme. Second, pick a relevant font of the options: ${FONTS.join(", ")}. Third, pick a relevant pattern of the options: ${PATTERN_KEYS.join(", ")}.`,
+        content: `The theme is "${question}". First, generate a few hex code colors related to the theme: each color name should be human readable, descriptive, unique, title cased, and related to the theme, but NOT include the name of the theme. Second, pick a relevant font of the options: ${FONTS.join(", ")}. Third, pick a relevant pattern of the options: ${PATTERN_KEYS.join(", ")}.`,
       },
     ],
     // @ts-ignore

@@ -12,7 +12,7 @@ export const useScreenshot = ({
   quality?: number;
 } = {}): [
   string | null,
-  (ref: HTMLDivElement) => Promise<string | void>,
+  (ref: HTMLDivElement, options?: Partial<Options>) => Promise<string | void>,
   Object,
 ] => {
   const [image, setImage] = useState<string | null>(null);
@@ -20,7 +20,10 @@ export const useScreenshot = ({
 
   const takeScreenShot = (
     node: HTMLElement,
-    options: Partial<Options> = {},
+    options: Partial<Options> = {
+      backgroundColor: "rgba(0,0,0,0)",
+      removeContainer: true,
+    },
   ) => {
     if (!node) {
       throw new Error("You should provide correct html node.");

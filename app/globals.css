@@ -291,8 +291,8 @@ body {
       --size: 32px;
       --thickness: 1px;
       content: "";
-      position: fixed;
-      height: 100vh;
+      position: absolute;
+      inset: 0;
       width: 100vw;
       pointer-events: none;
       background:
@@ -307,8 +307,6 @@ body {
             currentColor calc(var(--size) - var(--thickness)) var(--size)
           )
           var(--size) calc(50% + (var(--size) / 2)) / var(--size) var(--size);
-      top: 0;
-      left: 0;
       z-index: -1;
       opacity: 0.0625;
     }

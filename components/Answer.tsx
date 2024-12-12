@@ -4,7 +4,7 @@ import Markdown from "react-markdown";
 
 export default function Answer({ answer }: { answer: string }) {
   return (
-    <div className="container relative h-auto w-full shrink-0 gap-4 rounded-lg border border-solid border-stone-200 bg-white p-5 lg:p-10">
+    <div className="container relative h-auto w-full shrink-0 gap-4 rounded-lg border border-solid border-neutral-200 bg-white p-5 lg:p-10">
       {answer && (
         <div className="absolute right-4 top-4 flex items-center gap-3">
           {/* <Image unoptimized
@@ -46,10 +46,10 @@ export default function Answer({ answer }: { answer: string }) {
             <Markdown>{answer.trim()}</Markdown>
           ) : (
             <div className="flex w-full flex-col gap-2">
-              <div className="h-6 w-full animate-pulse rounded-md bg-stone-300" />
-              <div className="h-6 w-full animate-pulse rounded-md bg-stone-300" />
-              <div className="h-6 w-full animate-pulse rounded-md bg-stone-300" />
-              <div className="h-6 w-full animate-pulse rounded-md bg-stone-300" />
+              <div className="h-6 w-full animate-pulse rounded-md bg-neutral-300" />
+              <div className="h-6 w-full animate-pulse rounded-md bg-neutral-300" />
+              <div className="h-6 w-full animate-pulse rounded-md bg-neutral-300" />
+              <div className="h-6 w-full animate-pulse rounded-md bg-neutral-300" />
             </div>
           )}
         </div>

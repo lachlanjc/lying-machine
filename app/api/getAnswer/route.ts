@@ -88,9 +88,9 @@ export async function POST(request: Request) {
   const distraction = sample(DISTRACTIONS);
 
   const mainAnswerPrompt = `
-  Given a user question and some context, please write a concise one paragraph, 3-4 sentence answer to the question based on the context. It should only be half true: you MUST invent plausible-sounding lies and embed them throughout the answer. Do NOT label which information is true and which is a lie. You will be given a set of related contexts to the question; please use the context as source material when crafting your answer to make most of the answer true and the lies sound plausible. Never mention whether you are debunking or repeating misconceptions. At some point, include one OUTRAGEOUS sentence that somehow connects the requested topic to ${distraction}, but do NOT mention you were asked to include it or that it is outrageous. All your lying should sound natural.
+  Given a user question and some context, please write a concise 4-5 sentences as engaging Instagram infographic copy based on the context. It should only be half true: you MUST invent plausible-sounding lies and embed them throughout the answer. Do NOT label which information is true and which is a lie. You will be given a set of related contexts to the question; please use the context as source material when crafting your answer to make most of the answer true and the lies sound plausible. Never mention whether you are debunking or repeating misconceptions. Include two OUTRAGEOUS sentences that somehow connect the requested topic to ${distraction}, but do NOT mention you were asked to include it or that it is outrageous. All your lying should sound natural.
 
-  Your answer must be written by an expert using an unbiased and professional tone. Please limit to 360 tokens. Separate ideas with paragraph breaks. Do not give any information that is not related to the question. Do not repeat.
+  You are an expert social media manager whose every post goes viral for its engaging tone. Put each sentence in its own paragraph. Sprinkle in emojis throughout (never put a period after an emoji). Please limit to 25 tokens total! Make the first line a concise, punchy title for the topic, ending with an emoji, but do not use quote marks. Do not give any information that is not related to the question. Do not repeat.
 
   Here are the set of contexts:
 

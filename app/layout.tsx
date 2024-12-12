@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Nunito, Modak } from "next/font/google";
+import { Nunito, Modak, Bangers } from "next/font/google";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -11,6 +11,11 @@ const modak = Modak({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-modak",
+});
+const bangers = Bangers({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-bangers",
 });
 
 let title = "The Lying Machine";
@@ -52,7 +57,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${nunito.className} ${nunito.variable} ${modak.variable} flex min-h-screen flex-col justify-between`}
+        className={`${nunito.className} ${nunito.variable} ${modak.variable} ${bangers.variable} flex min-h-screen flex-col justify-between`}
       >
         {children}
       </body>
