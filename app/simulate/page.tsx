@@ -22,15 +22,18 @@ export default function Page() {
   const themeFracking: Theme = { colors: colorsFracking, font: "monospaced" };
   const themeCharli: Theme = {
     colors: [
-      { name: "Electric Popstar", hex: "#ff69b4" },
-      { name: "Glittering Gold Rush", hex: "#ffd700" },
-      { name: "Retro Arcade Frenzy", hex: "#3366cc" },
-      { name: "Dance Floor Disco", hex: "#ff0033" },
-      { name: "Smash Hit Success", hex: "#33cc33" },
-      { name: "Vibrant Mosiac", hex: "#ffcc00" },
+      { name: "Charli's Sunset", hex: "#ff9900" },
+      { name: "Sassy Pink", hex: "#ff69b4" },
+      { name: "Purple Reign", hex: "#7a288a" },
+      { name: "Electric Blue", hex: "#00bfff" },
+      { name: "Glamour Gold", hex: "#ffd700" },
+      { name: "Vibrant Coral", hex: "#ff99cc" },
     ],
     font: "cursive",
+    pattern:
+      '<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h20v20H0V0zm10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14zm20 0a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM10 37a7 7 0 1 0 0-14 7 7 0 0 0 0 14zm10-17h20v20H20V20zm10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z" fill="#000" fill-rule="evenodd"/></svg>',
   };
+
   const themeLondonUnderground: Theme = {
     colors: [
       { name: "Gothic Arch", hex: "#333333" },
@@ -45,7 +48,7 @@ export default function Page() {
 
   return (
     <main className="gridded h-full">
-      <Infographic theme={themeLondonUnderground} />
+      <Infographic theme={themeCharli} />
     </main>
   );
 }
