@@ -19,10 +19,10 @@ const Hero: FC<THeroProps> = ({
 
   return (
     <div className="flex flex-col items-center justify-center gap-6 py-6">
-      <h1 className="text-center font-heading text-6xl text-red-500 lg:text-8xl">
-        The Lying Machine
+      <h1 className="inline-block bg-gradient-to-b from-violet-700 to-purple-400 bg-clip-text px-3 text-center font-heading text-6xl text-transparent text-violet-600 lg:text-8xl">
+        Do Your Own Research!
       </h1>
-      {/* <p className="pb-8 text-center text-2xl leading-[normal] text-stone-500">
+      {/* <p className="pb-8 text-center text-2xl leading-[normal] text-neutral-500">
         Search for anything 🤡
       </p> */}
 
@@ -39,7 +39,7 @@ const Hero: FC<THeroProps> = ({
       <div className="flex max-w-2xl flex-wrap items-center justify-center gap-2.5">
         {suggestions.map((item) => (
           <div
-            className="flex h-[35px] cursor-pointer items-center justify-center gap-[5px] rounded-full border border-solid border-[#C1C1C1] bg-[#EDEDEA] px-2.5 py-2"
+            className="flex h-[35px] cursor-pointer items-center justify-center gap-[5px] rounded-full border border-solid border-purple-300 bg-purple-200 px-2.5 py-2"
             onClick={() => handleClickSuggestion(item?.name)}
             key={item.id}
           >
@@ -50,10 +50,9 @@ const Hero: FC<THeroProps> = ({
                 alt={item.name}
                 width={18}
                 height={16}
-                className="w-[18px]"
               />
             )}
-            <span className="text-sm font-light leading-[normal] text-[#1B1B16]">
+            <span className="text-sm font-light leading-[normal] text-purple-900">
               {item.name}
             </span>
           </div>

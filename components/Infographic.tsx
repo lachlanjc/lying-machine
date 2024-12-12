@@ -106,12 +106,12 @@ const FONT_SIZE_MAPPING: Record<Theme["font"], number> = {
   monospaced: 0.9,
   cursive: 0.8,
   handwritten: 1.25,
-  cutesy: 1,
+  cutesy: 0.8,
   comic: 1.1,
   oldstyle: 0.875,
   techno: 1,
   arcade: 0.75,
-  pixel: 1.1,
+  pixel: 0.9,
 };
 
 function Slide({
@@ -126,7 +126,7 @@ function Slide({
 }>) {
   return (
     <div
-      className="auto-contrast relative flex aspect-square w-[32rem] flex-shrink-0 snap-start break-inside-avoid flex-col gap-6 p-8 leading-snug outline-none"
+      className="auto-contrast relative flex aspect-square w-[32rem] flex-shrink-0 origin-top-left snap-start break-inside-avoid flex-col justify-center gap-6 p-8 leading-tight outline-none max-md:scale-50"
       style={
         {
           fontFamily: "var(--font-family)",
@@ -136,6 +136,7 @@ function Slide({
         } as React.CSSProperties
       }
       contentEditable
+      suppressContentEditableWarning
     >
       {children}
     </div>
@@ -143,7 +144,7 @@ function Slide({
 }
 
 function getPatternBackground(pattern: string, color: string) {
-  const opacity = 0.08;
+  const opacity = 0.125;
   const svg = pattern
     .replace(
       'fill="#000"',
@@ -158,17 +159,21 @@ function getPatternBackground(pattern: string, color: string) {
 }
 
 function Infographic({
-  theme: { colors, font: initialFont, pattern },
+  theme: { colors = [], font: initialFont, pattern },
+  question,
+  answer,
 }: {
   theme: Theme;
+  question: string;
+  answer: string;
 }) {
-  console.log(pattern);
   const [selectedColor, setSelectedColor] = useState(colors?.[0]);
   const [selectedFont, setSelectedFont] = useState<Theme["font"]>(initialFont);
   const ref = useRef<HTMLDivElement | null>(null);
+  const sentences = answer?.split("\n\n") ?? [];
 
   const [image, takeScreenShot] = useScreenshot({
-    type: "image/jpeg",
+    type: "image/png",
     quality: 1.0,
   });
 
@@ -176,13 +181,13 @@ function Infographic({
     takeScreenShot(ref.current!).then(() => {
       const a = document.createElement("a");
       a.href = image ?? "";
-      a.download = "lies.jpg";
+      a.download = `${question.toLowerCase().replaceAll(/\s/g, "-")}.png`;
       a.click();
     });
 
   return (
     <section
-      className={`grid items-center gap-6 md:grid-cols-[2fr_256px] md:pl-8 ${[geist.variable, geistMono.variable, facultyGlyphic.variable, caveat.variable, lacquer.variable, bangers.variable, spectral.variable, lugrasimo.variable, playwrite.variable, hachiMaru.variable, tektur.variable, pixelifySans.variable, pressStart.variable].join(" ")}`}
+      className={`gridded relative grid items-start gap-6 md:grid-cols-[1fr_256px] ${[geist.variable, geistMono.variable, facultyGlyphic.variable, caveat.variable, lacquer.variable, bangers.variable, spectral.variable, lugrasimo.variable, playwrite.variable, hachiMaru.variable, tektur.variable, pixelifySans.variable, pressStart.variable].join(" ")}`}
     >
       <style>{`
         :root {
@@ -191,7 +196,7 @@ function Infographic({
       `}</style>
       <div
         ref={ref}
-        className="auto-color my-4 flex snap-x snap-mandatory gap-8 overflow-x-auto print:flex-col"
+        className="auto-color m-8 flex w-fit flex-wrap gap-8"
         style={
           {
             "--color-primary": selectedColor?.hex ?? "#eee",
@@ -211,29 +216,34 @@ function Infographic({
           }
         >
           <p
-            className="font-bold"
+            className="text-balance font-bold leading-[1.1]"
             style={{ fontSize: "calc(3 * var(--font-size))" }}
           >
-            Fracking: Breaking rocks to fuel us! 💧🛢️
+            {sentences[0]}
           </p>
         </Slide>
-        <Slide>
-          <p>
-            Hydraulic fracturing (aka fracking) involves injecting water, sand,
-            and chemicals deep underground to crack shale rocks and release
-            trapped oil and gas. 🌍⚡
-          </p>
-          <p>
-            It’s revolutionized energy production, but it’s also raised concerns
-            about water usage, pollution, and earthquakes. 🌊⚠️
-          </p>
-          <p>
-            So, is fracking a game-changer or a gamble? The answer depends on
-            how we balance its risks and rewards. 🤔⚖️
-          </p>
-        </Slide>
+        {sentences.slice(1).map((line, i) => (
+          <Slide
+            key={line}
+            style={
+              {
+                "--color-primary":
+                  colors[i % colors.length]?.hex ??
+                  selectedColor?.hex ??
+                  "#eee",
+              } as React.CSSProperties
+            }
+          >
+            <p
+              style={{ fontSize: "calc(1.75 * var(--font-size))" }}
+              className="text-pretty"
+            >
+              {line}
+            </p>
+          </Slide>
+        ))}
       </div>
-      <section className="flex h-screen flex-col gap-4 border-l-gray-200 bg-white p-4 md:border-l md:p-6 print:hidden">
+      <section className="bottom-0 flex h-full max-w-[100vw] flex-col gap-4 border-l-gray-200 bg-white p-4 md:border-l md:p-6 print:hidden">
         <button
           onClick={downloadScreenshot}
           className="auto-color auto-contrast w-full rounded-full bg-[--color-primary] py-2 text-center font-bold transition-colors hover:bg-[--color-primary--tint-20]"
@@ -262,7 +272,7 @@ function Infographic({
             </button>
           ))}
         </div>
-        <h2 className="text-lg font-bold">Background</h2>
+        <h2 className="text-lg font-bold">Starting color</h2>
         <div className="flex flex-col gap-3">
           {colors.map((color) => (
             <button

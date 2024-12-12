@@ -4,7 +4,6 @@ import Answer from "@/components/Answer";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import InputArea from "@/components/InputArea";
 import Sources from "@/components/Sources";
 import Infographic from "@/components/Infographic";
 import { useRef, useState } from "react";
@@ -15,7 +14,7 @@ import {
 } from "eventsource-parser";
 import { Theme } from "@/utils/theme";
 
-const defaultTheme: Theme = { font: "sans", colors: [] };
+const defaultTheme: Theme = { font: "sans", colors: [], pattern: null };
 
 export default function Home() {
   const [promptValue, setPromptValue] = useState("");
@@ -26,7 +25,6 @@ export default function Home() {
   const [answer, setAnswer] = useState("");
   const [theme, setTheme] = useState<Theme>(defaultTheme);
   const [loading, setLoading] = useState(false);
-  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const handleDisplayResult = async (newQuestion?: string) => {
     newQuestion = newQuestion?.trim() || promptValue;
@@ -37,14 +35,15 @@ export default function Home() {
     setPromptValue("");
 
     await Promise.all([
-      handleSourcesAndAnswer(newQuestion),
+      handleSources(newQuestion),
+      handleAnswer(newQuestion),
       handleTheme(newQuestion),
     ]);
 
     setLoading(false);
   };
 
-  async function handleSourcesAndAnswer(question: string) {
+  async function handleSources(question: string) {
     setIsLoadingSources(true);
     let sourcesResponse = await fetch("/api/getSources", {
       method: "POST",
@@ -58,7 +57,9 @@ export default function Home() {
       setSources([]);
     }
     setIsLoadingSources(false);
+  }
 
+  async function handleAnswer(question: string) {
     const response = await fetch("/api/getAnswer", {
       method: "POST",
       headers: {
@@ -117,6 +118,13 @@ export default function Home() {
     setTheme(theme);
   }
 
+  const refresh = () => {
+    setLoading(true);
+    setAnswer("");
+    handleAnswer(question);
+    setLoading(false);
+  };
+
   const reset = () => {
     setShowResult(false);
     setPromptValue("");
@@ -129,45 +137,71 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="h-full px-4 pb-4">
-        {!showResult && (
-          <Hero
-            promptValue={promptValue}
-            setPromptValue={setPromptValue}
-            handleDisplayResult={handleDisplayResult}
-          />
-        )}
-
-        {showResult && (
-          <div className="flex h-full min-h-[68vh] w-full grow flex-col justify-between">
-            <div className="container w-full space-y-2">
-              <div className="container space-y-4">
-                <h1 className="container text-balance px-5 pt-2 text-center font-heading text-4xl capitalize text-red-500 lg:px-10 lg:text-6xl">
-                  “{question}”
-                </h1>
-                <>
-                  <Answer answer={answer} />
-                  <Sources sources={sources} isLoading={isLoadingSources} />
-                  <Infographic theme={theme} />
-                </>
+      {!showResult ? (
+        <>
+          <main className="h-full">
+            <Hero
+              promptValue={promptValue}
+              setPromptValue={setPromptValue}
+              handleDisplayResult={handleDisplayResult}
+            />
+          </main>
+          <Footer />
+        </>
+      ) : (
+        <main className="h-full">
+          <div className="flex h-full w-full grow flex-col justify-between">
+            <header className="flex flex-col px-4 pb-4 pt-12 lg:h-[124px] lg:flex-row lg:justify-between lg:gap-4 lg:px-8 lg:pb-4">
+              <h1
+                className="text-balance font-heading text-4xl capitalize text-neutral-700 transition-colors duration-500 lg:text-6xl"
+                style={{ color: theme.colors[0]?.hex }}
+              >
+                “{question}”
+              </h1>
+              <div className="-ml-3 flex gap-2">
+                <button className="cursor-pointer p-4" onClick={refresh}>
+                  {/* arrows in circle icon */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    opacity={0.5}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                  >
+                    <polyline points="1 4 1 10 7 10" />
+                    <polyline points="23 20 23 14 17 14" />
+                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15" />
+                  </svg>
+                </button>
+                <button className="cursor-pointer p-4" onClick={reset}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    opacity={0.5}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
               </div>
-
-              <div className="pt-1 sm:pt-2" ref={chatContainerRef}></div>
-            </div>
-
-            <div className="container px-4 lg:px-0">
-              <InputArea
-                promptValue={promptValue}
-                setPromptValue={setPromptValue}
-                handleDisplayResult={handleDisplayResult}
-                disabled={loading}
-                reset={reset}
-              />
-            </div>
+            </header>
+            {/* <Answer answer={answer} /> */}
+            <Sources sources={sources} isLoading={isLoadingSources} />
+            <Infographic theme={theme} answer={answer} question={question} />
           </div>
-        )}
-      </main>
-      <Footer />
+        </main>
+      )}
     </>
   );
 }

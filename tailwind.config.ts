@@ -19,7 +19,7 @@ const config: Config = {
     extend: {
       backgroundImage: {},
       fontFamily: {
-        heading: ["var(--font-modak)", "system-ui", "sans-serif"],
+        heading: ["var(--font-bangers)", "system-ui", "sans-serif"],
       },
     },
   },
