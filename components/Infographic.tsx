@@ -87,7 +87,7 @@ const FONT_MAPPING: Record<Theme["font"], string> = {
   rounded: "var(--font-nunito)",
   fancy: "var(--font-faculty-glyphic)",
   serif: "var(--font-spectral)",
-  old: "var(--font-lugrasimo)",
+  oldstyle: "var(--font-lugrasimo)",
   monospaced: "var(--font-geist-mono)",
   cursive: "var(--font-playwrite)",
   handwritten: "var(--font-caveat)",
@@ -107,7 +107,7 @@ const FONT_SIZE_MAPPING: Record<Theme["font"], number> = {
   handwritten: 1.25,
   cutesy: 1,
   comic: 1.1,
-  old: 0.875,
+  oldstyle: 0.875,
   techno: 1,
   arcade: 0.75,
   pixel: 1.1,
@@ -121,23 +121,34 @@ function Slide({
 }: PropsWithChildren<{
   font: Theme["font"];
   color: Theme["colors"][number];
-  style?: Partial<CSSStyleDeclaration>;
+  style?: Partial<React.CSSProperties>;
 }>) {
   return (
     <div
-      className="auto-contrast flex aspect-square w-[32rem] flex-shrink-0 snap-start break-inside-avoid flex-col gap-6 p-8 leading-snug outline-none"
+      className="auto-contrast relative flex aspect-square w-[32rem] flex-shrink-0 snap-start break-inside-avoid flex-col gap-6 p-8 leading-snug outline-none"
       style={
         {
           fontFamily: FONT_MAPPING[font],
           fontSize: "var(--font-size)",
-          backgroundColor: "var(--color)",
-          "--color": color?.hex ?? "#eee",
+          backgroundColor: "var(--color-primary)",
+          "--color-primary": color?.hex ?? "#eee",
           "--font-size": `${18 * FONT_SIZE_MAPPING[font]}px`,
           ...style,
         } as React.CSSProperties
       }
       contentEditable
     >
+      <svg id="texture" className="texture">
+        <filter id="noise">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency=".8"
+            numOctaves="4"
+            stitchTiles="stitch"
+          />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+      </svg>
       {children}
     </div>
   );
@@ -176,7 +187,12 @@ function Infographic({
         <Slide
           font={selectedFont}
           color={selectedColor}
-          style={{ filter: "brightness(1.25)" }}
+          style={
+            {
+              backgroundImage:
+                "linear-gradient(to bottom, var(--color-primary--tint-50), var(--color-primary))",
+            } as React.CSSProperties
+          }
         >
           <p className="text-6xl font-bold">
             Fracking: Breaking rocks to fuel us! 💧🛢️
