@@ -19,6 +19,7 @@
     "react-fast-marquee": "^1.6.5",
     "react-hot-toast": "^2.4.1",
     "react-markdown": "^9.0.1",
+    "title": "^4.0.1",
     "together-ai": "^0.6.0-alpha.3",
     "use-sound": "^4.0.3",
     "zod": "^3.23.8",

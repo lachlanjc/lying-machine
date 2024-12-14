@@ -17,10 +17,10 @@ const SourceCard = ({ source }: { source: { name: string; url: string } }) => {
         className="flex-shrink-0"
       />
       <div className="flex max-w-full flex-auto flex-col justify-center">
-        <h6 className="line-clamp-2 max-w-full text-sm font-bold leading-[normal] leading-tight text-stone-700">
+        <h6 className="line-clamp-2 max-w-full text-balance text-sm font-medium leading-tight text-stone-700">
           {source.name}
         </h6>
-        <small className="max-w-full truncate text-sm font-light text-neutral-400">
+        <small className="max-w-full truncate text-sm font-light text-neutral-500">
           {new URL(source.url).host?.replace("www.", "")}
         </small>
       </div>

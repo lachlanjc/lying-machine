@@ -1,6 +1,5 @@
 "use client";
 
-import Answer from "@/components/Answer";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
@@ -13,6 +12,7 @@ import {
   ReconnectInterval,
 } from "eventsource-parser";
 import { Theme } from "@/utils/theme";
+import title from "title";
 
 const defaultTheme: Theme = { font: "sans", colors: [], pattern: null };
 
@@ -153,13 +153,16 @@ export default function Home() {
           <div className="flex h-full w-full grow flex-col justify-between">
             <header className="flex flex-col px-4 pb-4 pt-12 lg:h-[124px] lg:flex-row lg:justify-between lg:gap-4 lg:px-8 lg:pb-4">
               <h1
-                className="text-balance font-heading text-4xl capitalize text-neutral-700 transition-colors duration-500 lg:text-6xl"
+                className="text-balance font-heading text-4xl text-neutral-700 transition-colors duration-500 lg:text-6xl"
                 style={{ color: theme.colors[0]?.hex }}
               >
-                “{question}”
+                “{title(question)}”
               </h1>
               <div className="-ml-3 flex gap-2">
-                <button className="cursor-pointer p-4" onClick={refresh}>
+                <button
+                  className="scale-100 cursor-pointer p-4 transition-transform hover:scale-110"
+                  onClick={refresh}
+                >
                   {/* arrows in circle icon */}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -177,7 +180,10 @@ export default function Home() {
                     <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15" />
                   </svg>
                 </button>
-                <button className="cursor-pointer p-4" onClick={reset}>
+                <button
+                  className="scale-100 cursor-pointer p-4 transition-transform hover:scale-110"
+                  onClick={reset}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"

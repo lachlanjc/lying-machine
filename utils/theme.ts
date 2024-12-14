@@ -14,7 +14,7 @@ export const FONTS = [
   "pixel",
 ] as const;
 
-interface Color {
+export interface Color {
   hex: string;
   name: string;
 }

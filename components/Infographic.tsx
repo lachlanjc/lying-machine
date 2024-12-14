@@ -4,6 +4,8 @@ import { Theme, FONTS } from "@/utils/theme";
 import {
   Spectral,
   Bangers,
+  Modak,
+  Nunito,
   Lacquer,
   Lugrasimo,
   Faculty_Glyphic,
@@ -16,6 +18,7 @@ import {
   Pixelify_Sans,
   Caveat,
 } from "next/font/google";
+import title from "title";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -41,6 +44,16 @@ const caveat = Caveat({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-caveat",
+});
+const nunito = Nunito({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-nunito",
+});
+const modak = Modak({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-modak",
 });
 const bangers = Bangers({
   subsets: ["latin"],
@@ -187,11 +200,14 @@ function Infographic({
 
   return (
     <section
-      className={`gridded relative grid items-start gap-6 md:grid-cols-[1fr_256px] ${[geist.variable, geistMono.variable, facultyGlyphic.variable, caveat.variable, lacquer.variable, bangers.variable, spectral.variable, lugrasimo.variable, playwrite.variable, hachiMaru.variable, tektur.variable, pixelifySans.variable, pressStart.variable].join(" ")}`}
+      className={`gridded relative grid items-start gap-6 md:grid-cols-[1fr_256px] ${[geist.variable, geistMono.variable, facultyGlyphic.variable, caveat.variable, lacquer.variable, bangers.variable, modak.variable, nunito.variable, spectral.variable, lugrasimo.variable, playwrite.variable, hachiMaru.variable, tektur.variable, pixelifySans.variable, pressStart.variable].join(" ")}`}
     >
       <style>{`
         :root {
           --color-primary: ${selectedColor?.hex ?? "#eee"};
+          --pattern: ${
+            pattern ? getPatternBackground(pattern, "#000") : "none"
+          };
         }
       `}</style>
       <div
@@ -209,14 +225,12 @@ function Infographic({
           style={
             {
               // backgroundImage: "linear-gradient(to top, var(--color-primary--tint-50), var(--color-primary))",
-              backgroundImage: pattern
-                ? getPatternBackground(pattern, "#000")
-                : undefined,
+              backgroundImage: "var(--pattern)",
             } as React.CSSProperties
           }
         >
           <p
-            className="text-balance font-bold leading-[1.1]"
+            className="text-balance font-medium leading-[1.1]"
             style={{ fontSize: "calc(3 * var(--font-size))" }}
           >
             {sentences[0]}
@@ -246,7 +260,7 @@ function Infographic({
       <section className="bottom-0 flex h-full max-w-[100vw] flex-col gap-4 border-l-gray-200 bg-white p-4 md:border-l md:p-6 print:hidden">
         <button
           onClick={downloadScreenshot}
-          className="auto-color auto-contrast w-full rounded-full bg-[--color-primary] py-2 text-center font-bold transition-colors hover:bg-[--color-primary--tint-20]"
+          className="auto-color auto-contrast w-full rounded-full bg-[--color-primary] py-2 text-center font-medium transition-colors hover:bg-[--color-primary--tint-20]"
           style={
             {
               "--color-primary": selectedColor?.hex ?? "#aaa",
@@ -255,7 +269,7 @@ function Infographic({
         >
           Download
         </button>
-        <h2 className="-mb-2 text-lg font-bold">Font</h2>
+        <h2 className="-mb-2 text-lg font-medium">Font</h2>
         <div className="flex flex-col">
           {FONTS.map((font) => (
             <button
@@ -272,18 +286,18 @@ function Infographic({
             </button>
           ))}
         </div>
-        <h2 className="text-lg font-bold">Starting color</h2>
+        <h2 className="text-lg font-medium">Starting color</h2>
         <div className="flex flex-col gap-3">
           {colors.map((color) => (
             <button
-              className="flex items-center gap-2 aria-selected:font-bold"
+              className="flex items-center gap-2 aria-selected:font-medium"
               aria-selected={selectedColor?.hex === color.hex}
               style={{ "--color": color.hex } as React.CSSProperties}
               onClick={() => setSelectedColor(color)}
               key={color.hex}
             >
               <div className="h-6 w-6 rounded-full bg-[--color] shadow-inner" />
-              <small>{color.name}</small>
+              <small>{title(color.name)}</small>
             </button>
           ))}
         </div>

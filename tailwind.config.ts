@@ -19,7 +19,8 @@ const config: Config = {
     extend: {
       backgroundImage: {},
       fontFamily: {
-        heading: ["var(--font-bangers)", "system-ui", "sans-serif"],
+        heading: ["var(--font-camera)", "system-ui", "sans-serif"],
+        body: ["var(--font-camera-plain)"],
       },
     },
   },

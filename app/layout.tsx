@@ -1,21 +1,14 @@
 import type { Metadata } from "next";
-import { Nunito, Modak, Bangers } from "next/font/google";
 import "./globals.css";
+import localFont from "next/font/local";
 
-const nunito = Nunito({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-nunito",
+const cameraPlainFont = localFont({
+  src: "./fonts/ABCCameraPlainVariable-Trial.woff2",
+  variable: "--font-camera-plain",
 });
-const modak = Modak({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-modak",
-});
-const bangers = Bangers({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-bangers",
+const cameraFont = localFont({
+  src: "./fonts/ABCCamera-Bold-Trial.woff2",
+  variable: "--font-camera",
 });
 
 let title = "The Lying Machine";
@@ -57,7 +50,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${nunito.className} ${nunito.variable} ${modak.variable} ${bangers.variable} flex min-h-screen flex-col justify-between`}
+        className={`${cameraPlainFont.className} ${cameraPlainFont.variable} ${cameraFont.variable} flex min-h-screen flex-col justify-between`}
       >
         {children}
       </body>
