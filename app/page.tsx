@@ -153,7 +153,7 @@ export default function Home() {
           <div className="flex h-full w-full grow flex-col justify-between">
             <header className="flex flex-col px-4 pb-4 pt-12 lg:h-[124px] lg:flex-row lg:justify-between lg:gap-4 lg:px-8 lg:pb-4">
               <h1
-                className="text-balance font-heading text-4xl text-neutral-700 transition-colors duration-500 lg:text-6xl"
+                className="font-heading text-4xl text-neutral-700 transition-colors duration-500 lg:text-6xl truncate"
                 style={{ color: theme.colors[0]?.hex }}
               >
                 “{title(question)}”
@@ -162,6 +162,7 @@ export default function Home() {
                 <button
                   className="scale-100 cursor-pointer p-4 transition-transform hover:scale-110"
                   onClick={refresh}
+                  title="Regenerate results"
                 >
                   {/* arrows in circle icon */}
                   <svg
@@ -183,6 +184,7 @@ export default function Home() {
                 <button
                   className="scale-100 cursor-pointer p-4 transition-transform hover:scale-110"
                   onClick={reset}
+                  title="Close results"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
